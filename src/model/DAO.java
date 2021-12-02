@@ -35,19 +35,97 @@ public class DAO {
 			pst.setString(2, login.getSenha());
 			ResultSet rs = pst.executeQuery();
 			while (rs.next()) {
+				login.setId(rs.getInt(1));
 				login.setNome(rs.getString(2));
-				login.setSaldo(rs.getInt(4));
-				contador ++;
+				login.setSaldo(rs.getInt(5));
+				contador++;
 			}
 			if (contador == 0) {
 				login.setConta("");
 				login.setSenha("");
 			}
+			System.out.println(login.getNome());
 			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void Saque(Pessoa login, Caixa caixa) {
+
+	}
+
+	public void setaCaixa(Caixa caixa) {
+		String read = "select * from Caixa where id=1";
+		try {
+			Connection con = conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				caixa.setNotas10(Integer.parseInt(rs.getString(2)));
+				caixa.setNotas20(Integer.parseInt(rs.getString(3)));
+				caixa.setNotas50(Integer.parseInt(rs.getString(4)));
+				caixa.setNotas100(Integer.parseInt(rs.getString(5)));
+			}
+			con.close();
+			caixa.setTotal();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 	}
 
+	public void atualizaCaixa(Caixa caixa) {
+		String update = "update Caixa set notas10=?, notas20=?, notas50=? ,notas100=? where id=1";
+		try {
+			Connection con = conectar();
+			PreparedStatement pst = con.prepareStatement(update);
+			pst.setInt(1, caixa.getNotas10());
+			pst.setInt(2, caixa.getNotas20());
+			pst.setInt(3, caixa.getNotas50());
+			pst.setInt(4, caixa.getNotas100());
+			pst.executeUpdate();
+			con.close();
+			caixa.setTotal();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+	}
+
+	public void atualizaSaldo(Pessoa login) {
+		String update = "update login set saldo=? where idlogin=?";
+		try {
+			Connection con = conectar();
+			PreparedStatement pst = con.prepareStatement(update);
+			pst.setInt(1, login.getSaldo());
+			pst.setInt(2, login.getId());
+			pst.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void confereAbastecer(Pessoa login) {
+		String read = "select * from login where idlogin=3";
+		int contador = 0;
+		try {
+			Connection con = conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+
+				if (login.getConta().equals(rs.getString(3)) && login.getSenha().equals(rs.getString(4))) {
+					login.setId(rs.getInt(1));
+					login.setNome(rs.getString(2));
+					login.setSaldo(rs.getInt(5));
+				}contador ++;
+			}
+			System.out.println(contador);
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 }

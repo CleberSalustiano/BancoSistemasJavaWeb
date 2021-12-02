@@ -15,18 +15,72 @@
 	border: 0;
 	cursor: pointer;
 }
+
+.Botao2 {
+	text-decoration: none;
+	background-color: #000000;
+	padding: 5px 15px 5px 15px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+
+.Botao3{
+	text-decoration: none;
+	background-color: #ff0000;
+	padding: 5px 17px 5px 17px;
+	color: #fff;
+	font-size: 1.2em;
+	font-weight: 700;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
 .Caixa1 {
 	width: 320px;
 	padding: 5px;
 	margin-botton: 10px;
 	border-radius: 5px;
 }
+.Caixa2 {
+	padding: 5px;
+	margin-botton: 10px;
+	border-radius: 5px;
+}
 body {
+	width: 320px 200px;
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1em;
 	font-weight: 400;
 }
 
-.senhaIncorreta{
+.senhaIncorreta {
 	color: #ff0000;
+}
+
+.Saldo {
+	padding: 200px;
+	background-color: #000000;
+}
+
+.tabela {
+	margin-top: 30px;
+	border-collapse: collapse;
+}
+
+.tabela th {
+	border: 1px solid #ddd;
+	text-align: left;
+	color: #fff;
+}
+
+.tabela td {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+#concluido{
+	color: #008000;
 }
