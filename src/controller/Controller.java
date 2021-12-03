@@ -19,7 +19,7 @@ import model.Pessoa;
  * Servlet implementation class Controller
  */
 @WebServlet(urlPatterns = { "/Controller", "/main", "/login", "/saque", "/sacar", "/conta", "/sair", "/loginabastecer",
-		"/abastecer" })
+		"/abastecer", "/adicionar", "/abastecimento", "/cadastro", "/cadastrar" })
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Caixa caixa = new Caixa();
@@ -33,7 +33,7 @@ public class Controller extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getServletPath();
 		System.out.println(action);
 		if (action.equals("/main")) {
@@ -54,7 +54,13 @@ public class Controller extends HttpServlet {
 			response.sendRedirect("abastecer.html");
 		} else if (action.equals("/abastecer")) {
 			abastecer(request, response);
-		} else {
+		} else if (action.equals("/adicionar")) {
+			abastecimento(request, response);
+		} else if (action.equals("/abastecimento")) {
+			adicionar(request, response);
+		} else if (action.equals("/cadastro")) {
+			response.sendRedirect("cadastro.html");
+		}else {
 			response.sendRedirect("index.html");
 		}
 	}
@@ -79,16 +85,50 @@ public class Controller extends HttpServlet {
 		login.setConta(request.getParameter("conta"));
 		login.setSenha(request.getParameter("senha"));
 		dao.confereAbastecer(login);
+		dao.setaCaixa(caixa);
 		try {
 			if (login.getNome().equals("Abastecer")) {
-				request.setAttribute("pessoa", login);
+				request.setAttribute("caixa", caixa);
 				RequestDispatcher rd = request.getRequestDispatcher("menuAbastecer.jsp");
 				rd.forward(request, response);
 				response.sendRedirect("menuAbastecer.jsp");
 			}
 		} catch (Exception e) {
-			response.sendRedirect("sair");
+			response.sendRedirect("incorretoAbastecimento.html");
 		}
+	}
+
+	protected void adicionar(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!request.getParameter("notas10").equals("")) {
+			int notas10 = Integer.parseInt(request.getParameter("notas10"));
+			caixa.setNotas10(caixa.getNotas10() + notas10);
+		}
+		if (!request.getParameter("notas20").equals("")) {
+			int notas20 = Integer.parseInt(request.getParameter("notas20"));
+			caixa.setNotas20(caixa.getNotas20() + notas20);
+		}
+		if (!request.getParameter("notas50").equals("")) {
+			int notas50 = Integer.parseInt(request.getParameter("notas50"));
+			caixa.setNotas50(caixa.getNotas50() + notas50);
+		}
+		if (!request.getParameter("notas100").equals("")) {
+			int notas100 = Integer.parseInt(request.getParameter("notas100"));
+			caixa.setNotas100(caixa.getNotas100() + notas100);
+		}
+		dao.atualizaCaixa(caixa);
+		request.setAttribute("caixa", caixa);
+		RequestDispatcher rd = request.getRequestDispatcher("abastecimentoConcluido.jsp");
+		rd.forward(request, response);
+		response.sendRedirect("abastecimentoConcluido.jsp");
+	}
+
+	protected void abastecimento(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("caixa", caixa);
+		RequestDispatcher rd = request.getRequestDispatcher("abastecimento.jsp");
+		rd.forward(request, response);
+		response.sendRedirect("abastecimento.jsp");
 	}
 
 	protected void saque(HttpServletRequest request, HttpServletResponse response)
@@ -111,7 +151,7 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 		int saque = Integer.parseInt(request.getParameter("saque"));
 		dao.setaCaixa(caixa);
-		System.out.println("saque= " + saque + " Saldo= " + login.getSaldo());
+		// System.out.println("saque= " + saque + " Saldo= " + login.getSaldo());
 		if (saque > login.getSaldo()) {
 			request.setAttribute("pessoa", login);
 			RequestDispatcher rd = request.getRequestDispatcher("saqueSaldoInsuficiente.jsp");
@@ -126,7 +166,7 @@ public class Controller extends HttpServlet {
 			int total = caixa.getTotal();
 			combinacaoNotas(caixa, saque, login);
 			if (total > caixa.getTotal()) {
-				System.out.println(login.getSaldo());
+				// System.out.println(login.getSaldo());
 				dao.atualizaCaixa(caixa);
 				dao.atualizaSaldo(login);
 				request.setAttribute("pessoa", login);
@@ -135,9 +175,9 @@ public class Controller extends HttpServlet {
 				response.sendRedirect("SaqueConcluido.jsp");
 			} else {
 				request.setAttribute("pessoa", login);
-				RequestDispatcher rd = request.getRequestDispatcher("TotalCaixaInsuficiente.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("SemCombinacaoNotas.jsp");
 				rd.forward(request, response);
-				response.sendRedirect("TotalCaixaInsuficiente.jsp");
+				response.sendRedirect("SemCombinacaoNotas.jsp");
 			}
 		}
 

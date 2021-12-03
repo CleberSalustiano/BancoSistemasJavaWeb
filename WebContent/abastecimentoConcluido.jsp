@@ -23,7 +23,8 @@
 			<th><a href="sair" class="Botao3">Sair</a></th>
 		</thead>
 		</table>
-		
+		<br>
+		<a class="concluido">Saque Concluído com Sucesso</a>
 	</div>
 	<script src="scripts/saldoAbastecido.js"></script>
 	
