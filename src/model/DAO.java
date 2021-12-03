@@ -20,7 +20,7 @@ public class DAO {
 			con = (Connection) DriverManager.getConnection(url, user, password);
 			return con;
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 			return null;
 		}
 	}
@@ -47,7 +47,7 @@ public class DAO {
 			System.out.println(login.getNome());
 			con.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class DAO {
 			con.close();
 			caixa.setTotal();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 
 	}
@@ -84,7 +84,7 @@ public class DAO {
 			con.close();
 			caixa.setTotal();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 
 	}
@@ -99,7 +99,7 @@ public class DAO {
 			pst.executeUpdate();
 			con.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 	}
 
@@ -121,7 +121,7 @@ public class DAO {
 			System.out.println(contador);
 			con.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 	}
 
@@ -136,7 +136,7 @@ public class DAO {
 			pst.executeUpdate();
 			con.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 	}
 
@@ -151,7 +151,7 @@ public class DAO {
 			pst.executeUpdate();
 			con.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			//System.out.println(e);
 		}
 	}
 }
