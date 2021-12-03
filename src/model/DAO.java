@@ -44,7 +44,7 @@ public class DAO {
 				login.setConta("");
 				login.setSenha("");
 			}
-			System.out.println(login.getNome());
+			//System.out.println(login.getNome());
 			con.close();
 		} catch (Exception e) {
 			//System.out.println(e);
@@ -118,7 +118,7 @@ public class DAO {
 					login.setSaldo(rs.getInt(5));
 				}contador ++;
 			}
-			System.out.println(contador);
+			//System.out.println(contador);
 			con.close();
 		} catch (Exception e) {
 			//System.out.println(e);
@@ -153,5 +153,27 @@ public class DAO {
 		} catch (Exception e) {
 			//System.out.println(e);
 		}
+	}
+
+	public boolean comparaLogin(Pessoa login) {
+		String read = "select * from login";
+		try {
+			Connection con = conectar();
+			PreparedStatement pst = con.prepareStatement(read);
+			ResultSet rs = pst.executeQuery();
+			while (rs.next()) {
+				if (login.getConta().equals(rs.getString(3)) && login.getSenha().equals(rs.getString(4))) {
+					return false;
+				}else if (login.getConta().equals(rs.getString(3))) {
+					return false;
+				}
+			}
+			con.close();
+			return true;
+		} catch (Exception e) {
+			//System.out.println(e);
+			return false;
+		}
+		
 	}
 }
