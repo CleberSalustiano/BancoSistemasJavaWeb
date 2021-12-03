@@ -1,0 +1,16 @@
+CREATE TABLE `caixa` (
+  `id` int DEFAULT NULL,
+  `notas10` int DEFAULT NULL,
+  `notas20` int DEFAULT NULL,
+  `notas50` int DEFAULT NULL,
+  `notas100` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `login` (
+  `idlogin` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(50) DEFAULT NULL,
+  `conta` varchar(20) DEFAULT NULL,
+  `senha` varchar(20) DEFAULT NULL,
+  `saldo` int DEFAULT NULL,
+  PRIMARY KEY (`idlogin`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

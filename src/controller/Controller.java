@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.org.apache.bcel.internal.ExceptionConst;
-
 import model.Caixa;
 import model.DAO;
 import model.Pessoa;
@@ -19,7 +17,7 @@ import model.Pessoa;
  * Servlet implementation class Controller
  */
 @WebServlet(urlPatterns = { "/Controller", "/main", "/login", "/saque", "/sacar", "/conta", "/sair", "/loginabastecer",
-		"/abastecer", "/adicionar", "/abastecimento", "/cadastro", "/cadastrar" })
+		"/abastecer", "/adicionar", "/abastecimento", "/cadastro", "/cadastrar", "/alteraconta" })
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	Caixa caixa = new Caixa();
@@ -35,7 +33,7 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getServletPath();
-		System.out.println(action);
+		//System.out.println(action);
 		if (action.equals("/main")) {
 			response.sendRedirect("login.html");
 		} else if (action.equals("/login")) {
@@ -60,11 +58,40 @@ public class Controller extends HttpServlet {
 			adicionar(request, response);
 		} else if (action.equals("/cadastro")) {
 			response.sendRedirect("cadastro.html");
+		}else if (action.equals("/cadastrar")) {
+			cadastrar(request, response);
+		}else if (action.equals("/conta")) {
+			conta(request, response);
+		}else if (action.equals("/alteraconta")) {
+			alteraconta(request, response);
 		}else {
 			response.sendRedirect("index.html");
 		}
 	}
-
+	protected void cadastrar(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		login.setNome(request.getParameter("nome"));
+		login.setConta(request.getParameter("conta"));
+		login.setSenha(request.getParameter("senha"));
+		dao.cadastraUsuario(login);
+		response.sendRedirect("sair");
+		}
+	protected void alteraconta(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		login.setNome(request.getParameter("nome"));
+		login.setConta(request.getParameter("conta"));
+		login.setSenha(request.getParameter("senha"));
+		dao.atualizaUsuario(login);
+		response.sendRedirect("sair");
+		
+	}
+	protected void conta(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setAttribute("pessoa", login);
+		RequestDispatcher rd = request.getRequestDispatcher("menuConta.jsp");
+		rd.forward(request, response);
+		response.sendRedirect("menuConta.jsp");
+	}
 	protected void login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		login.setConta(request.getParameter("conta"));

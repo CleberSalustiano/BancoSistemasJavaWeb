@@ -51,10 +51,6 @@ public class DAO {
 		}
 	}
 
-	public void Saque(Pessoa login, Caixa caixa) {
-
-	}
-
 	public void setaCaixa(Caixa caixa) {
 		String read = "select * from Caixa where id=1";
 		try {
@@ -123,6 +119,36 @@ public class DAO {
 				}contador ++;
 			}
 			System.out.println(contador);
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void cadastraUsuario(Pessoa login) {
+		String create = "insert into login (nome,conta,senha,saldo) values (?,?,?, 2000)";
+		try {
+			Connection con = conectar();
+			PreparedStatement pst = con.prepareStatement(create);
+			pst.setString(1, login.getNome());
+			pst.setString(2, login.getConta());
+			pst.setString(3, login.getSenha());
+			pst.executeUpdate();
+			con.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
+
+	public void atualizaUsuario(Pessoa login) {
+		String update =  "update login set nome=?,conta=?,senha=? where idlogin=?";
+		try {
+			Connection con = conectar();
+			PreparedStatement pst = con.prepareStatement(update);
+			pst.setString(1, login.getNome());
+			pst.setString(2, login.getConta());
+			pst.setString(3, login.getSenha());
+			pst.executeUpdate();
 			con.close();
 		} catch (Exception e) {
 			System.out.println(e);
