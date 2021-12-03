@@ -69,8 +69,13 @@ public class Controller extends HttpServlet {
 		login.setNome(request.getParameter("nome"));
 		login.setConta(request.getParameter("conta"));
 		login.setSenha(request.getParameter("senha"));
+		boolean existe = dao.comparaLogin(login);
+		if (existe == true) {
 		dao.cadastraUsuario(login);
 		response.sendRedirect("sair");
+		} else {
+			response.sendRedirect("cadastroJaExistente.html");
+		}
 	
 	}
 
