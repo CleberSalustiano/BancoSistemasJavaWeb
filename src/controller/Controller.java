@@ -16,7 +16,7 @@ import model.Pessoa;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet(urlPatterns = { "/Controller", "/main", "/login", "/saque", "/sacar", "/conta", "/sair", "/loginabastecer",
+@WebServlet(urlPatterns = { "/Controller", "/main", "/login", "/saque", "/sacar", "/sair", "/loginabastecer",
 		"/abastecer", "/adicionar", "/abastecimento", "/cadastro", "/cadastrar", "/alteraconta" })
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -60,10 +60,6 @@ public class Controller extends HttpServlet {
 			response.sendRedirect("cadastro.html");
 		}else if (action.equals("/cadastrar")) {
 			cadastrar(request, response);
-		}else if (action.equals("/conta")) {
-			conta(request, response);
-		}else if (action.equals("/alteraconta")) {
-			alteraconta(request, response);
 		}else {
 			response.sendRedirect("index.html");
 		}
@@ -75,23 +71,9 @@ public class Controller extends HttpServlet {
 		login.setSenha(request.getParameter("senha"));
 		dao.cadastraUsuario(login);
 		response.sendRedirect("sair");
-		}
-	protected void alteraconta(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		login.setNome(request.getParameter("nome"));
-		login.setConta(request.getParameter("conta"));
-		login.setSenha(request.getParameter("senha"));
-		dao.atualizaUsuario(login);
-		response.sendRedirect("sair");
-		
+	
 	}
-	protected void conta(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setAttribute("pessoa", login);
-		RequestDispatcher rd = request.getRequestDispatcher("menuConta.jsp");
-		rd.forward(request, response);
-		response.sendRedirect("menuConta.jsp");
-	}
+
 	protected void login(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		login.setConta(request.getParameter("conta"));
@@ -103,8 +85,7 @@ public class Controller extends HttpServlet {
 			request.setAttribute("pessoa", login);
 			RequestDispatcher rd = request.getRequestDispatcher("menu.jsp");
 			rd.forward(request, response);
-			response.sendRedirect("menu.jsp");
-		}
+			}
 	}
 
 	protected void abastecer(HttpServletRequest request, HttpServletResponse response)
@@ -147,7 +128,6 @@ public class Controller extends HttpServlet {
 		request.setAttribute("caixa", caixa);
 		RequestDispatcher rd = request.getRequestDispatcher("abastecimentoConcluido.jsp");
 		rd.forward(request, response);
-		response.sendRedirect("abastecimentoConcluido.jsp");
 	}
 
 	protected void abastecimento(HttpServletRequest request, HttpServletResponse response)
@@ -155,7 +135,6 @@ public class Controller extends HttpServlet {
 		request.setAttribute("caixa", caixa);
 		RequestDispatcher rd = request.getRequestDispatcher("abastecimento.jsp");
 		rd.forward(request, response);
-		response.sendRedirect("abastecimento.jsp");
 	}
 
 	protected void saque(HttpServletRequest request, HttpServletResponse response)
@@ -163,7 +142,6 @@ public class Controller extends HttpServlet {
 		request.setAttribute("pessoa", login);
 		RequestDispatcher rd = request.getRequestDispatcher("saque.jsp");
 		rd.forward(request, response);
-		response.sendRedirect("saque.jsp");
 	}
 
 	protected void voltar(HttpServletRequest request, HttpServletResponse response)
@@ -171,8 +149,7 @@ public class Controller extends HttpServlet {
 		request.setAttribute("pessoa", login);
 		RequestDispatcher rd = request.getRequestDispatcher("menu.jsp");
 		rd.forward(request, response);
-		response.sendRedirect("menu.jsp");
-	}
+		}
 
 	protected void sacar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -183,12 +160,10 @@ public class Controller extends HttpServlet {
 			request.setAttribute("pessoa", login);
 			RequestDispatcher rd = request.getRequestDispatcher("saqueSaldoInsuficiente.jsp");
 			rd.forward(request, response);
-			response.sendRedirect("saqueSaldoInsuficiente.jsp");
 		} else if (saque > caixa.getTotal()) {
 			request.setAttribute("pessoa", login);
 			RequestDispatcher rd = request.getRequestDispatcher("TotalCaixaInsuficiente.jsp");
 			rd.forward(request, response);
-			response.sendRedirect("TotalCaixaInsuficiente.jsp");
 		} else {
 			int total = caixa.getTotal();
 			combinacaoNotas(caixa, saque, login);
@@ -199,12 +174,10 @@ public class Controller extends HttpServlet {
 				request.setAttribute("pessoa", login);
 				RequestDispatcher rd = request.getRequestDispatcher("SaqueConcluido.jsp");
 				rd.forward(request, response);
-				response.sendRedirect("SaqueConcluido.jsp");
 			} else {
 				request.setAttribute("pessoa", login);
 				RequestDispatcher rd = request.getRequestDispatcher("SemCombinacaoNotas.jsp");
 				rd.forward(request, response);
-				response.sendRedirect("SemCombinacaoNotas.jsp");
 			}
 		}
 

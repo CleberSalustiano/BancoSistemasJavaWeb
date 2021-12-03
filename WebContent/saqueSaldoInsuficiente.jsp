@@ -20,7 +20,6 @@
 		<thead>
 			<th><a href="saque" class="Botao2">Sacar</a></th>
 			<th><a href="javascript: visualizarSaldo(<%= pessoa.getSaldo()%>)" class="Botao2">Saldo</a></th>
-			<th><a href="conta" class="Botao2">Conta</a></th>
 			<th><a href="sair" class="Botao3">Sair</a></th>
 		</thead>
 		</table>
