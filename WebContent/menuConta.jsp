@@ -24,9 +24,27 @@
 			<th><a href="sair" class="Botao3">Sair</a></th>
 		</thead>
 		</table>
-		
+		<form name="formularioConta" action="alteraconta">
+			<table>
+			<br>
+				<tr>
+					<td><input type="text" name="nome" placeholder="Nome"
+						class="Caixa1"></td>
+				</tr>
+				<tr>
+					<td><input type="text" name="conta" placeholder="Conta" 
+						class="Caixa1"></td>
+				</tr>
+				<tr>
+					<td><input type="password" name="senha" placeholder="Senha"
+						class="Caixa1"></td>
+				</tr>
+			</table>
+			<input type="button" value="Alterar" class="Botao3"> 
+		</form>
+
 	</div>
 	<script src="scripts/saldo.js"></script>
-	
+		
 </body>
 </html>

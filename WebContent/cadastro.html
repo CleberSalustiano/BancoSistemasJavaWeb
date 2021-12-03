@@ -9,9 +9,13 @@
 <body>
 	<div align="center">
 		<img src="imagens/banco.png">
-		<h1>LOGIN</h1>
-		<form name="formularioLogin" action="login">
+		<h1>Cadastro</h1>
+		<form name="formularioCadastro" action="cadastrar">
 			<table>
+				<tr>
+					<td><input type="text" name="nome" placeholder="Nome"
+						class="Caixa1"></td>
+				</tr>
 				<tr>
 					<td><input type="text" name="conta" placeholder="Conta"
 						class="Caixa1"></td>
@@ -20,12 +24,15 @@
 					<td><input type="password" name="senha" placeholder="Senha"
 						class="Caixa1"></td>
 				</tr>
+				<tr>
+					<td><input type="password" name="repetesenha" placeholder="Confirme a Senha"
+						class="Caixa1"></td>
+				</tr>
 			</table>
-			<input type="button" value="Entrar" class="Botao1"
+			<input type="button" value="Cadastrar" class="Botao1"
 				onclick="validar()"> 
-			<a href="cadastro" class="Botao4">Cadastro</a>
 		</form>
-		<script src="scripts/validador.js"></script>
+		<script src="scripts/validadorCadastro.js"></script>
 	</div>
 
 </body>

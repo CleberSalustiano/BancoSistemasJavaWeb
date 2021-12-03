@@ -24,9 +24,17 @@
 			<th><a href="sair" class="Botao3">Sair</a></th>
 		</thead>
 		</table>
-		
+		<br>
+		<a class="senhaIncorreta">Não há combinação de notas equivalentes</a>
+			<form name="formularioSaque" action="sacar">
+				<td><input type="number" name="saque" placeholder="Digite o valor do saque" class = "Caixa2"></td>
+				<input type="button" value="sacar" class="Botao1"
+				onclick="validar()">
+			</form>
 	</div>
+	<script src="scripts/validadorsaque.js"></script>
 	<script src="scripts/saldo.js"></script>
+	
 	
 </body>
 </html>
