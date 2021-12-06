@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%
+	String resposta = (String) request.getAttribute("resposta");
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,7 +18,13 @@
 		<form name="formularioLogin" action="abastecer">
 			<table>
 				<tr>
-					<a class="senhaIncorreta">Usuário e/ou senha incorretos</a>
+					<%
+						if (resposta != null) {
+					%>
+					<a class="senhaIncorreta"><%=resposta%></a>
+					<%
+						}
+					%>
 				</tr>
 				<tr>
 					<td><input type="text" name="conta" placeholder="Conta"

@@ -24,7 +24,7 @@
 		</thead>
 		</table>
 		<br>
-		<a class="concluido">Saque Concluído com Sucesso</a>
+		<a class="concluido">Abastecimento Concluído com Sucesso</a>
 	</div>
 	<script src="scripts/saldoAbastecido.js"></script>
 	
