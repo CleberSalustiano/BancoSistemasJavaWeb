@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%
+	String resposta = (String) request.getAttribute("resposta");
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -9,12 +14,17 @@
 <body>
 	<div align="center">
 		<img src="imagens/banco.png">
-		<h1>Cadastro</h1>
-		<form name="formularioCadastro" action="cadastrar">
+		<h1>LOGIN</h1>
+		<form name="formularioLogin" action="login">
 			<table>
 				<tr>
-					<td><input type="text" name="nome" placeholder="Nome"
-						class="Caixa1"></td>
+					<%
+						if (resposta != null) {
+					%>
+					<a class="senhaIncorreta"><%=resposta%></a>
+					<%
+						}
+					%>
 				</tr>
 				<tr>
 					<td><input type="text" name="conta" placeholder="Conta"
@@ -24,15 +34,11 @@
 					<td><input type="password" name="senha" placeholder="Senha"
 						class="Caixa1"></td>
 				</tr>
-				<tr>
-					<td><input type="password" name="repetesenha" placeholder="Confirme a Senha"
-						class="Caixa1"></td>
-				</tr>
 			</table>
-			<input type="button" value="Cadastrar" class="Botao1"
-				onclick="validar()"> 
+			<input type="button" value="Entrar" class="Botao1"
+				onclick="validar()"> <a href="cadastro" class="Botao4">Cadastro</a>
 		</form>
-		<script src="scripts/validadorCadastro.js"></script>
+		<script src="scripts/validador.js"></script>
 	</div>
 
 </body>

@@ -3,6 +3,7 @@
 <%@page import="model.Pessoa"%>
 <%
 	Pessoa pessoa = (Pessoa) request.getAttribute("pessoa");
+	String resposta = (String) request.getAttribute("resposta");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -13,26 +14,37 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-	
+
 	<div align="center">
-	<h1>Seja bem vindo, <%=pessoa.getNome() %></h1>
-		<table class = "tabela">
-		<thead>
-			<th><a href="saque" class="Botao2">Sacar</a></th>
-			<th><a href="javascript: visualizarSaldo(<%= pessoa.getSaldo()%>)" class="Botao2">Saldo</a></th>
-			<th><a href="sair" class="Botao3">Sair</a></th>
-		</thead>
+		<h1>
+			Seja bem vindo,
+			<%=pessoa.getNome()%></h1>
+		<table class="tabela">
+			<thead>
+				<th><a href="saque" class="Botao2">Sacar</a></th>
+				<th><a
+					href="javascript: visualizarSaldo(<%=pessoa.getSaldo()%>)"
+					class="Botao2">Saldo</a></th>
+				<th><a href="sair" class="Botao3">Sair</a></th>
+			</thead>
 		</table>
 		<br>
-			<form name="formularioSaque" action="sacar">
-				<td><input type="number" name="saque" placeholder="Digite o valor do saque" class = "Caixa2"></td>
-				<input type="button" value="sacar" class="Botao1"
-				onclick="validar()">
-			</form>
+		<%
+			if (resposta != null) {
+		%>
+		<a class="senhaIncorreta"><%=resposta%></a>
+		<%
+			}
+		%>
+		<form name="formularioSaque" action="sacar">
+			<td><input type="number" name="saque"
+				placeholder="Digite o valor do saque" class="Caixa2"></td> <input
+				type="button" value="sacar" class="Botao1" onclick="validar()">
+		</form>
 	</div>
 	<script src="scripts/validadorsaque.js"></script>
 	<script src="scripts/saldo.js"></script>
-	
-	
+
+
 </body>
 </html>

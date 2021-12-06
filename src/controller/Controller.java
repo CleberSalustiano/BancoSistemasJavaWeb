@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,9 +34,9 @@ public class Controller extends HttpServlet {
 			throws ServletException, IOException {
 		// response.getWriter().append("Served at: ").append(request.getContextPath());
 		String action = request.getServletPath();
-		//System.out.println(action);
+		// System.out.println(action);
 		if (action.equals("/main")) {
-			response.sendRedirect("login.html");
+			response.sendRedirect("login.jsp");
 		} else if (action.equals("/login")) {
 			if (login.getNome() == null) {
 				login(request, response);
@@ -57,13 +58,14 @@ public class Controller extends HttpServlet {
 		} else if (action.equals("/abastecimento")) {
 			adicionar(request, response);
 		} else if (action.equals("/cadastro")) {
-			response.sendRedirect("cadastro.html");
-		}else if (action.equals("/cadastrar")) {
+			response.sendRedirect("cadastro.jsp");
+		} else if (action.equals("/cadastrar")) {
 			cadastrar(request, response);
-		}else {
+		} else {
 			response.sendRedirect("index.html");
 		}
 	}
+
 	protected void cadastrar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		login.setNome(request.getParameter("nome"));
@@ -71,12 +73,15 @@ public class Controller extends HttpServlet {
 		login.setSenha(request.getParameter("senha"));
 		boolean existe = dao.comparaLogin(login);
 		if (existe == true) {
-		dao.cadastraUsuario(login);
-		response.sendRedirect("sair");
+			dao.cadastraUsuario(login);
+			response.sendRedirect("sair");
 		} else {
-			response.sendRedirect("cadastroJaExistente.html");
+			String resposta = "Email já cadastrado";
+			request.setAttribute("resposta", resposta);
+			RequestDispatcher rd = request.getRequestDispatcher("cadastro.jsp");
+			rd.forward(request, response);
 		}
-	
+
 	}
 
 	protected void login(HttpServletRequest request, HttpServletResponse response)
@@ -85,12 +90,15 @@ public class Controller extends HttpServlet {
 		login.setSenha(request.getParameter("senha"));
 		dao.confereLogin(login);
 		if (login.getConta() == "" && login.getSenha() == "") {
-			response.sendRedirect("senhaIncorreta.html");
+			String resposta = "Usuario e/ou senha incorretos";
+			request.setAttribute("resposta", resposta);
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			rd.forward(request, response);
 		} else {
 			request.setAttribute("pessoa", login);
 			RequestDispatcher rd = request.getRequestDispatcher("menu.jsp");
 			rd.forward(request, response);
-			}
+		}
 	}
 
 	protected void abastecer(HttpServletRequest request, HttpServletResponse response)
@@ -104,10 +112,12 @@ public class Controller extends HttpServlet {
 				request.setAttribute("caixa", caixa);
 				RequestDispatcher rd = request.getRequestDispatcher("menuAbastecer.jsp");
 				rd.forward(request, response);
-				response.sendRedirect("menuAbastecer.jsp");
 			}
 		} catch (Exception e) {
-			response.sendRedirect("incorretoAbastecimento.html");
+			String resposta = "Usuario e/ou senha incorretos";
+			request.setAttribute("resposta", resposta);
+			RequestDispatcher rd = request.getRequestDispatcher("abastecer.jsp");
+			rd.forward(request, response);
 		}
 	}
 
@@ -130,8 +140,10 @@ public class Controller extends HttpServlet {
 			caixa.setNotas100(caixa.getNotas100() + notas100);
 		}
 		dao.atualizaCaixa(caixa);
+		String resposta = "Abastecimento concluído com sucesso";
 		request.setAttribute("caixa", caixa);
-		RequestDispatcher rd = request.getRequestDispatcher("abastecimentoConcluido.jsp");
+		request.setAttribute("resposta", resposta);
+		RequestDispatcher rd = request.getRequestDispatcher("menuAbastecer.jsp");
 		rd.forward(request, response);
 	}
 
@@ -154,7 +166,7 @@ public class Controller extends HttpServlet {
 		request.setAttribute("pessoa", login);
 		RequestDispatcher rd = request.getRequestDispatcher("menu.jsp");
 		rd.forward(request, response);
-		}
+	}
 
 	protected void sacar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -162,13 +174,18 @@ public class Controller extends HttpServlet {
 		dao.setaCaixa(caixa);
 		// System.out.println("saque= " + saque + " Saldo= " + login.getSaldo());
 		if (saque > login.getSaldo()) {
+			String resposta = "Saldo insuficiente";
+			request.setAttribute("resposta", resposta);
 			request.setAttribute("pessoa", login);
-			RequestDispatcher rd = request.getRequestDispatcher("saqueSaldoInsuficiente.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("saque.jsp");
 			rd.forward(request, response);
 		} else if (saque > caixa.getTotal()) {
+			String resposta = "Valor em Caixa insuficiente";
+			request.setAttribute("resposta", resposta);
 			request.setAttribute("pessoa", login);
-			RequestDispatcher rd = request.getRequestDispatcher("TotalCaixaInsuficiente.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("saque.jsp");
 			rd.forward(request, response);
+
 		} else {
 			int total = caixa.getTotal();
 			combinacaoNotas(caixa, saque, login);
@@ -180,8 +197,10 @@ public class Controller extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("SaqueConcluido.jsp");
 				rd.forward(request, response);
 			} else {
+				String resposta = "Não há combinação de notas equivalentes";
+				request.setAttribute("resposta", resposta);
 				request.setAttribute("pessoa", login);
-				RequestDispatcher rd = request.getRequestDispatcher("SemCombinacaoNotas.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("saque.jsp");
 				rd.forward(request, response);
 			}
 		}

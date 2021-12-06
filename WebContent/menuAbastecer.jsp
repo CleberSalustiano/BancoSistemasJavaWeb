@@ -3,6 +3,7 @@
 <%@page import="model.Caixa"%>
 <%
 	Caixa caixa = (Caixa) request.getAttribute("caixa");
+	String resposta = (String) request.getAttribute("resposta");
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -23,7 +24,14 @@
 			<th><a href="sair" class="Botao3">Sair</a></th>
 		</thead>
 		</table>
-		
+		<br>
+		<%
+			if (resposta != null) {
+		%>
+		<a class="concluido"><%=resposta%></a>
+		<%
+			}
+		%>
 	</div>
 	<script src="scripts/saldoAbastecido.js"></script>
 	
