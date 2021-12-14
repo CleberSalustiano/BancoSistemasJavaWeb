@@ -50,7 +50,7 @@ public class Controller extends HttpServlet {
 		} else if (action.equals("/sair")) {
 			sair(request, response);
 		} else if (action.equals("/loginabastecer")) {
-			response.sendRedirect("abastecer.html");
+			response.sendRedirect("abastecer.jsp");
 		} else if (action.equals("/abastecer")) {
 			abastecer(request, response);
 		} else if (action.equals("/adicionar")) {
@@ -76,7 +76,7 @@ public class Controller extends HttpServlet {
 			dao.cadastraUsuario(login);
 			response.sendRedirect("sair");
 		} else {
-			String resposta = "Email já cadastrado";
+			String resposta = "Email ja cadastrado";
 			request.setAttribute("resposta", resposta);
 			RequestDispatcher rd = request.getRequestDispatcher("cadastro.jsp");
 			rd.forward(request, response);
@@ -140,7 +140,7 @@ public class Controller extends HttpServlet {
 			caixa.setNotas100(caixa.getNotas100() + notas100);
 		}
 		dao.atualizaCaixa(caixa);
-		String resposta = "Abastecimento concluído com sucesso";
+		String resposta = "Abastecimento concluido com sucesso";
 		request.setAttribute("caixa", caixa);
 		request.setAttribute("resposta", resposta);
 		RequestDispatcher rd = request.getRequestDispatcher("menuAbastecer.jsp");
@@ -197,7 +197,7 @@ public class Controller extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("SaqueConcluido.jsp");
 				rd.forward(request, response);
 			} else {
-				String resposta = "Não há combinação de notas equivalentes";
+				String resposta = "Nao ha combinacao de notas equivalentes";
 				request.setAttribute("resposta", resposta);
 				request.setAttribute("pessoa", login);
 				RequestDispatcher rd = request.getRequestDispatcher("saque.jsp");
